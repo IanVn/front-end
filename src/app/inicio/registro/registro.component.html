@@ -1,0 +1,72 @@
+<div class="colorlib-loader"></div>
+
+<div id="page">
+    <app-header></app-header>
+
+    <div class="main body-main">
+
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form [formGroup]="formulario" (ngSubmit)="registro()">
+                        <h2 class="form-title"> Cree una cuenta </h2>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Escriba su CURP</mat-label>
+                            <input matInput placeholder="CURP" formControlName="curp">
+                            <mat-icon matSuffix>input</mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Escriba su nombre</mat-label>
+                            <input matInput placeholder="Nombre" formControlName="nombre">
+                            <mat-icon matSuffix>input</mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Escriba su apellido</mat-label>
+                            <input matInput placeholder="Apellido" formControlName="apellido">
+                            <mat-icon matSuffix>input</mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Escriba su fecha de nacimiento</mat-label>
+                            <input matInput type="date" placeholder="Cumpleaños" formControlName="fecha_nacimiento">
+                            <mat-icon matSuffix>date_range</mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Escriba su correo</mat-label>
+                            <input matInput type="email" placeholder="Correo" formControlName="correo">
+                            <mat-icon matSuffix>alternate_email</mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Escriba su contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password': 'text'" placeholder="Password" formControlName="password">
+                            <mat-icon matSuffix (click)="hide = !hide"> {{hide ? 'visibility_off' : 'visibility'}} </mat-icon>
+                        </mat-form-field>
+
+                        <div class="button-wrapper example-full-width">
+                            <span class="label">
+                              Subir archivo probatorio
+                            </span>
+
+                            <input type="file" name="upload" id="upload" class="upload-box" placeholder="Upload File">
+
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Registarse" />
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        Ya tiene una cuenta? <a routerLink="/siriuda/login" class="loginhere-link"> Inicie sesión aquí</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
