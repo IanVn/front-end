@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
 import { Validadores, ValidadorPassword } from './validadores';
 import { map } from 'rxjs/operators';
@@ -30,8 +30,10 @@ export class RegistroComponent implements OnInit {
     init_plugins();
     this.CrearFormulario();
     this.ValoresDefecto();
+    this.CompararPassword();
   }
 
+ 
   CrearFormulario() {
 
     // Creamos el formulario
@@ -42,10 +44,10 @@ export class RegistroComponent implements OnInit {
       apellido: [null, [Validators.required]],
       fecha_nacimiento: [null, [Validators.required, Validadores.AnioFecha]],
       correo: [null, [Validators.required, Validators.email]],
-      password: [null],
+      password: [null, [Validators.required]],
       confirm_password: [null, [Validators.required]],
       opcion: [null]
-  }, { validators: this.CompararPassword() });
+  });
   }
 
   ValoresDefecto() {
@@ -68,11 +70,6 @@ export class RegistroComponent implements OnInit {
 
   registro() {
     console.log(this.formulario);
-    // let fecha = this.formulario.value.fecha_nacimiento.split('-');
-    // console.log( Number(fecha[0]));
-    // if ( Number(fecha[0]) < 1996) {
-    //   console.log('fecha invalida');
-    // } 
   }
 
   // Funcion para obtener los errores del curp
@@ -88,22 +85,22 @@ export class RegistroComponent implements OnInit {
 
   // Configuramos un observable para que verifique la contraseña Observable<ValidationErrors> | null data !== this.f.password.value
   // tslint:disable-next-line: variable-name
-  CompararPassword(): ValidationErrors | null  {
-
-    return this.f.confirm_password.valueChanges.subscribe( data => {
-      if (data !== this.f.password.value) {
-        return {
-          NoSonIguales: true
-        };
-      } else {
-        return null;
-      }
-    });
+  CompararPassword()  {
+      
+    this.f.confirm_password.valueChanges.subscribe( data => {
+        if( data !== this.f.password.value ) {
+          // Con esta instruccion es como si estuvieramos creando un nuevo validador
+           this.f.confirm_password.setErrors( { SonDiferentes: true} );
+        }
+        else {
+          this.f.confirm_password.setErrors( null);
+        }
+    } );
   }
 
   getErrorPassword() {
     return this.f.confirm_password.hasError('required') ? 'Este campo es obligatorio' :
-    this.f.confirm_password.hasError('NoSonIguales') ? 'Las contraseñas deben ser iguales' : '';
+    this.f.confirm_password.hasError('SonDiferentes') ? 'No coinciden las contraseñas' : '';
   }
 
 }

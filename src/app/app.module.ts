@@ -9,6 +9,7 @@ import { RegistroComponent } from './inicio/registro/registro.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular.material.module';
+import { ServiciosModule } from './servicios/servicios.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AngularMaterialModule } from './angular.material.module';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ServiciosModule
   ],
   providers: [],
   bootstrap: [AppComponent],
