@@ -425,5 +425,9 @@ input[type=checkbox]:not(old):checked+label>span:before {
     cursor: pointer;
 }
 
+.alto {
+    height: 100vh;
+}
+
 
 /*# sourceMappingURL=style.css.map */

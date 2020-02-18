@@ -1,41 +1,46 @@
 <div class="colorlib-loader"></div>
 
 <div id="page">
-
     <app-header></app-header>
-    <div class="main body-main">
+
+    <div class="main body-main alto">
 
         <section class="signup">
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form>
-                        <h2 class="form-title"> Inice sesión </h2>
+                    <form [formGroup]="login" (ngSubmit)="Login()">
+                        <h2 class="form-title"> Inicie sesión </h2>
 
                         <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Escriba su CURP</mat-label>
-                            <input matInput placeholder="CURP">
-                            <mat-icon matSuffix>input</mat-icon>
+                            <input matInput placeholder="CURP" formControlName="curp">
+                            <mat-icon matPrefix>input</mat-icon>
+                            <mat-error *ngIf="!f.curp.valid && f.curp.touched ">
+                                {{ getErrorCurp() }}
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
-                            <mat-label>Escriba su contraseña</mat-label>
-                            <input matInput type='password' placeholder="CURP">
-                            <mat-icon matSuffix>input</mat-icon>
+                            <mat-label> Escriba su contraseña </mat-label>
+                            <input matInput type="password" placeholder="Password" formControlName="password">
+                            <mat-error *ngIf="!f.password.valid && f.password.touched">
+                                Este campo es obligatorio
+                            </mat-error>
                         </mat-form-field>
 
-                        <div class="form-group">
-                            <input type="submit" name="submit" id="submit" class="form-submit" value="Registrarse" />
-                        </div>
+                        <!-- <div class="form-group example-full-width">
+                            <input type="submit" class="form-submit" value="Registrarse" />
+                        </div> -->
+                        <button class="example-full-width" mat-raised-button color="primary" [disabled]="login.invalid"> Iniciar sesion </button>
 
                     </form>
                     <p class="loginhere">
-                        No tiene una cuenta? <a routerLink="/siriuda/registro" class="loginhere-link"> Registrese aquí </a>
+                        No tiene una cuenta ?<a routerLink="/siriuda/registro" class="loginhere-link"> Registrese aquí</a>
                     </p>
                 </div>
             </div>
         </section>
 
     </div>
-
 </div>

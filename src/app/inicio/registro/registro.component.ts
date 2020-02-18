@@ -1,9 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
-import { Validadores, ValidadorPassword } from './validadores';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-
+import { Validadores } from './validadores';
+import { RegistroService } from '../../servicios/registro/registro.service';
 
 declare function init_plugins();
 
@@ -16,15 +14,15 @@ export class RegistroComponent implements OnInit {
 
   // tslint:disable-next-line: ban-types
   hide: Boolean = true;
-  opcion: string;
+  
   // Creamos una variable del tipo formgroup para usar formularios reactivos
   formulario: FormGroup;
 
   // Creamos una expresion regular para el formato del CURP
   formato = new RegExp('^[A-Z]{4}\\d{6}([A-Z]{6})\\d{2}$', 'i');
-  // Realizamos la inyecccion del formBuilder
+  // Realizamos la inyecccion del formBuilder y el registro del servicio
   // tslint:disable-next-line: variable-name
-  constructor( private _fb: FormBuilder) { }
+  constructor( private _fb: FormBuilder, private _registro: RegistroService) { }
 
   ngOnInit() {
     init_plugins();
@@ -70,6 +68,8 @@ export class RegistroComponent implements OnInit {
 
   registro() {
     console.log(this.formulario);
+    // Imprimimos lo que nos da la peticion al servidor
+    // this._registro.ExisteCurp(this.formulario.value.curp ).subscribe( data => console.log(data) );
   }
 
   // Funcion para obtener los errores del curp

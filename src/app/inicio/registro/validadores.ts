@@ -23,25 +23,4 @@ export class Validadores {
         }
     }
 }
-    // Esta funcion es para comparar dos contraseñas pero no es un metodo estatico, podemos recibir una variable del tipo formGroup
-    // para poder comparar los dos campos
-export class ValidadorPassword {
-    static CompararPassword( formulario: FormGroup ): ValidationErrors | null {
-        
-        if (!formulario) {
-            return;
-        }
-        
-        // Obtemos los valores de dicho formulario
-        let password = formulario.value.password;
-        let confirmPassword = formulario.value.confirm_password;
 
-        // Si no son iguales entonces devolvemos un nombre del validador y su valor booleano
-        if ( password !== confirmPassword) {
-            return {
-                noSonIguales: true
-            };
-        }
-        return null;
-    }
-}
