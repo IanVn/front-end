@@ -16,36 +16,61 @@
                             <mat-label>Escriba su CURP</mat-label>
                             <input matInput placeholder="CURP" formControlName="curp">
                             <mat-icon matSuffix>input</mat-icon>
+                            <mat-error *ngIf="!f.curp.valid && f.curp.touched">
+                                {{ getErrorCurp() }}
+                            </mat-error>
+
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Escriba su nombre</mat-label>
                             <input matInput placeholder="Nombre" formControlName="nombre">
                             <mat-icon matSuffix>input</mat-icon>
+                            <mat-error *ngIf="!f.nombre.valid && f.nombre.touched">
+                                Su nombre es obligatorio
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Escriba su apellido</mat-label>
                             <input matInput placeholder="Apellido" formControlName="apellido">
                             <mat-icon matSuffix>input</mat-icon>
+                            <mat-error *ngIf="!f.apellido.valid && f.apellido.touched">
+                                Su es apellido obligatorio
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Escriba su fecha de nacimiento</mat-label>
                             <input matInput type="date" placeholder="Cumpleaños" formControlName="fecha_nacimiento">
                             <mat-icon matSuffix>date_range</mat-icon>
+                            <mat-error *ngIf="(!f.fecha_nacimiento.valid && f.fecha_nacimiento.touched) || f.fecha_nacimiento.hasError('anio_incorrecto')">
+                                El año de nacimiento no es un formato adecuado
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Escriba su correo</mat-label>
                             <input matInput type="email" placeholder="Correo" formControlName="correo">
                             <mat-icon matSuffix>alternate_email</mat-icon>
+                            <mat-error *ngIf="!f.correo.valid && f.correo.touched">
+                                {{ getErrorCorreo()}}
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Escriba su contraseña</mat-label>
                             <input matInput [type]="hide ? 'password': 'text'" placeholder="Password" formControlName="password">
                             <mat-icon matSuffix (click)="hide = !hide"> {{hide ? 'visibility_off' : 'visibility'}} </mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Confirme su contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password': 'text'" placeholder="Password" formControlName="confirm_password">
+                            <mat-icon matSuffix (click)="hide = !hide"> {{hide ? 'visibility_off' : 'visibility'}} </mat-icon>
+                            <mat-error *ngIf="!f.confirm_password.valid && f.confirm_password.touched">
+                                {{ getErrorPassword() }}
+                            </mat-error>
                         </mat-form-field>
 
                         <div class="button-wrapper example-full-width">
@@ -56,6 +81,16 @@
                             <input type="file" name="upload" id="upload" class="upload-box" placeholder="Upload File">
 
                         </div>
+
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Select a option</mat-label>
+                            <mat-select formControlName="opcion">
+                                <mat-option>Select a option </mat-option>
+                                <mat-option value="option1">Option 1</mat-option>
+                                <mat-option value="option2">Option 2 (disabled)</mat-option>
+                                <mat-option value="option3">Option 3</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
                         <div class="form-group">
                             <input type="submit" name="submit" id="submit" class="form-submit" value="Registarse" />
