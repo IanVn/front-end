@@ -60,8 +60,10 @@
 
                         <mat-form-field appearance="outline" class="example-full-width">
                             <mat-label>Escriba su contraseña</mat-label>
-                            <input matInput [type]="hide ? 'password': 'text'" placeholder="Password" formControlName="password">
-                            <mat-icon matSuffix (click)="hide = !hide"> {{hide ? 'visibility_off' : 'visibility'}} </mat-icon>
+                            <input matInput type="password" placeholder="Password" formControlName="password">
+                            <mat-error *ngIf="!f.password.valid && f.password.touched && f.password.hasError('required')">
+                                Este campo es obligatorio
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
@@ -73,28 +75,21 @@
                             </mat-error>
                         </mat-form-field>
 
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label> Selccione una opción </mat-label>
+                            <mat-select formControlName="opcion">
+                                <mat-option *ngFor="let item of tipos|async" [value]="item.ID_TIPO"> {{ item.NOMBRE_TIPO }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
                         <div class="button-wrapper example-full-width">
                             <span class="label">
                               Subir archivo probatorio
                             </span>
-
                             <input type="file" name="upload" id="upload" class="upload-box" placeholder="Upload File">
-
                         </div>
 
-                        <mat-form-field appearance="outline" class="example-full-width">
-                            <mat-label>Select a option</mat-label>
-                            <mat-select formControlName="opcion">
-                                <mat-option>Select a option </mat-option>
-                                <mat-option value="option1">Option 1</mat-option>
-                                <mat-option value="option2">Option 2 (disabled)</mat-option>
-                                <mat-option value="option3">Option 3</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                        <div class="form-group">
-                            <input type="submit" name="submit" id="submit" class="form-submit" value="Registrarse" />
-                        </div>
+                        <button class="example-full-width" mat-raised-button color="primary"> Iniciar sesion </button>
                     </form>
                     <p class="loginhere">
                         Ya tiene una cuenta? <a routerLink="/siriuda/login" class="loginhere-link"> Inicie sesión aquí</a>

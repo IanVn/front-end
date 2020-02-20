@@ -10,6 +10,8 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular.material.module';
 import { ServiciosModule } from './servicios/servicios.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RegistroIntercept } from './interceptores/registro/registro.interceptor';
 
 
 @NgModule({
