@@ -1,11 +1,10 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Validadores } from './validadores';
 import { RegistroService } from '../../servicios/registro/registro.service';
 import { switchMap, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Tipos } from 'src/app/models/tipos';
-
+import { FormularioService } from '../../servicios/registro/formulario.service';
 
 declare function init_plugins();
 
@@ -25,11 +24,22 @@ export class RegistroComponent implements OnInit, AfterViewInit{
   formato = new RegExp('^[A-Z]{4}\\d{6}([A-Z]{6})\\d{2}$', 'i');
   
   // Array para almacenar los tipos
-  tipos: Observable< Tipos[] >;
+  tipos: Observable< any >;
+
+  // Array para obtener los estudios profesionales
+  EstudiosProfesionales: Observable <any>;
   
+  // Variable para almacenar los diferentes tipos de formularios, se guardan como un arreglo de objetos
+
+  // Variable para almacenar la opcion seleccionada
+  opcionSeleccionada: number = 0;
+
+  // Variable para analizar si el formulario es valido si solo contiene sus elementos obligatorios
+  DatosObligatorios: boolean = true;
+
   // Realizamos la inyecccion del formBuilder y el registro del servicio
   // tslint:disable-next-line: variable-name
-  constructor( private _fb: FormBuilder, public _registro: RegistroService, private _cdRef: ChangeDetectorRef) { }
+  constructor( private _fb: FormBuilder, public _registro: RegistroService, private _cdRef: ChangeDetectorRef, private _formulario: FormularioService) { }
 
   ngOnInit() {
     init_plugins();
@@ -37,11 +47,14 @@ export class RegistroComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.ValoresDefecto();
+    
+    //this.ValoresDefecto();
     this.CompararPassword();
     this.ExisteCurp();
     this.ExisteCorreo();
     this.tipos = this._registro.GetTipos();
+    this.Opciones();
+    this.ObtenerEstudios();
     this._cdRef.detectChanges();
 
   }
@@ -57,7 +70,8 @@ export class RegistroComponent implements OnInit, AfterViewInit{
       correo: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       confirm_password: [null, [Validators.required]],
-      opcion: [null]
+      opcion: [null, Validators.required],
+      caracteristicas: new FormArray([])
   });
   }
 
@@ -70,8 +84,8 @@ export class RegistroComponent implements OnInit, AfterViewInit{
       correo: 'shen_woo96@hotmail.com',
       password: '123456',
       confirm_password: '123456',
-      opcion: 'option1'
-    })
+      opcion: 0
+    });
   }
 
   // Funcion para obtener acceso al control del formulario
@@ -118,9 +132,7 @@ export class RegistroComponent implements OnInit, AfterViewInit{
   ExisteCurp() {
     this.f.curp.valueChanges.pipe(
     filter( data => data.length === 18 ),
-    switchMap( ( data: any  ) => {
-      return this._registro.ExisteCurp(data);
-    }))
+    switchMap( data => this._registro.ExisteCurp(data)))
     .subscribe( data => {
       if ( !data) {
         // Actualizamos el error para la curp
@@ -132,19 +144,43 @@ export class RegistroComponent implements OnInit, AfterViewInit{
   
   ExisteCorreo() {
       this.f.correo.valueChanges.pipe( 
-      switchMap( ( data: any ) => this._registro.ExisteCorreo( data) )
+      switchMap( data => this._registro.ExisteCorreo( data) )
       ).subscribe( data => {
+        // Si recibimos un estado false entonces quiere decir que el correo ya existe, creamos el error en la etiqueta correo
+        // Si no existe desactivamos los validadores
         if ( !data ) {
           this.f.correo.setErrors( { existeCorreo: true });
         } else {
           this.f.correo.setErrors( null );
         }
       });
-    }
+  }
   
-  // ObtenerTipos() {
-  //   this._registro.GetTipos().subscribe( tipos => console.log(tipos));
-  // }
-  
+  // Creamos una funcion para tener acceso al control del array
+  get t() {
+    return this.f.caracteristicas as FormArray;
+  }
+
+  // Este 
+  Opciones() {
+    this.f.opcion.valueChanges.subscribe( data => {
+      this.opcionSeleccionada = data;
+      this.t.clear();
+      this.DatosObligatorios = Object.keys( this.formulario.value).length >= 8 ? true : false;
+    });
+  }
+
+  ObtenerEstudios() {
+    // A partir de aqui estamos recibiendo el formulario del componente hijo en la variable data
+    this._formulario.formulario$.subscribe( data => {
+      if( this.t.length > 0 ) {
+        this.t.clear();
+      }
+      this.t.push( data );
+      this.DatosObligatorios = this.t.length > 0 ? false : true; 
+      // this.DatosObligatorios = Object.keys( this.formulario.value).length >= 8 ? false : true;
+      console.log(this.formulario);
+    } );
+  }
   
 }

@@ -39,12 +39,21 @@ export class RegistroService {
   }
 
   // Peticion para obtener todos los tipos
-  GetTipos(): Observable <Tipos []> {
+  GetTipos(): Observable <any> {
     let url = ULR_SERVICES + '/obtener/tipos';
-    return this.http.get <Tipos []> (url).pipe(
-      map( (tipos: any) => tipos.tipo )
+    return this.http.get <any> (url).pipe(
+      map( tipos => tipos.tipo )
     );
-
   }
+
+  ObtenerEstudiosProfesionales(): Observable <any> {
+    let url = ULR_SERVICES + '/obtener/estudiosProfesionales';
+
+    // Hacemos la peticion GET
+    return this.http.get( url ).pipe(
+      map( ( estudios: any ) => estudios.estudios_profesionales )
+    );
+  }
+
 
 }

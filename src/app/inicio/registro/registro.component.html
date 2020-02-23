@@ -76,10 +76,13 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-full-width">
-                            <mat-label> Selccione una opción </mat-label>
+                            <mat-label> Escoga una opción </mat-label>
                             <mat-select formControlName="opcion">
                                 <mat-option *ngFor="let item of tipos|async" [value]="item.ID_TIPO"> {{ item.NOMBRE_TIPO }} </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="(!f.opcion.valid && !f.opcion.touched) || f.opcion.hasError('required')">
+                                Debe escoger una opción
+                            </mat-error>
                         </mat-form-field>
 
                         <div class="button-wrapper example-full-width">
@@ -89,10 +92,17 @@
                             <input type="file" name="upload" id="upload" class="upload-box" placeholder="Upload File">
                         </div>
 
-                        <button class="example-full-width" mat-raised-button color="primary"> Iniciar sesion </button>
+                        <div [ngSwitch]="true">
+                            <app-estudios *ngSwitchCase="opcionSeleccionada === 1"></app-estudios>
+
+                        </div>
+                        <!-- <app-estudios></app-estudios> -->
+
+
+                        <button class="example-full-width" mat-raised-button color="primary" [disabled]="formulario.invalid || DatosObligatorios "> Iniciar sesion </button>
                     </form>
                     <p class="loginhere">
-                        Ya tiene una cuenta? <a routerLink="/siriuda/login" class="loginhere-link"> Inicie sesión aquí</a>
+                        Ya tiene una cuenta? <a routerLink="/siriuda/login" class="loginhere-link"> Registrarse </a>
                     </p>
                 </div>
             </div>
