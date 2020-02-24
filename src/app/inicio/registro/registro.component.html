@@ -9,7 +9,7 @@
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form [formGroup]="formulario" (ngSubmit)="registro()">
+                    <form [formGroup]="formulario" (ngSubmit)="registro()" ngNativeValidate>
                         <h2 class="form-title"> Cree una cuenta </h2>
 
                         <mat-form-field appearance="outline" class="example-full-width">
@@ -93,16 +93,15 @@
                         </div>
 
                         <div [ngSwitch]="true">
-                            <app-estudios *ngSwitchCase="opcionSeleccionada === 1"></app-estudios>
-
+                            <app-academico *ngSwitchCase="opcionSeleccionada === 1"> </app-academico>
+                            <app-profesor *ngSwitchCase="opcionSeleccionada ===2"></app-profesor>
+                            <app-pasantes *ngSwitchCase="opcionSeleccionada ===3"></app-pasantes>
                         </div>
-                        <!-- <app-estudios></app-estudios> -->
 
-
-                        <button class="example-full-width" mat-raised-button color="primary" [disabled]="formulario.invalid || DatosObligatorios "> Iniciar sesion </button>
+                        <button class="example-full-width" mat-raised-button color="primary" [disabled]="formulario.invalid || DatosObligatorios "> Registrarse </button>
                     </form>
                     <p class="loginhere">
-                        Ya tiene una cuenta? <a routerLink="/siriuda/login" class="loginhere-link"> Registrarse </a>
+                        Ya tiene una cuenta? <a routerLink="/siriuda/login" class="loginhere-link"> Inicie sesión </a>
                     </p>
                 </div>
             </div>

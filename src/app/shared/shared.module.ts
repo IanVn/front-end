@@ -3,19 +3,18 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { EstudiosComponent } from './estudios/estudios.component';
 import { AngularMaterialModule } from '../angular.material.module';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, EstudiosComponent],
+  declarations: [HeaderComponent],
   imports: [
     CommonModule,
     RouterModule,
     AngularMaterialModule,
     ReactiveFormsModule
   ],
-  exports: [ HeaderComponent, ReactiveFormsModule, FormsModule, EstudiosComponent ]
+  exports: [ HeaderComponent, ReactiveFormsModule, FormsModule]
 })
 export class SharedModule { }

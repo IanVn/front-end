@@ -1,0 +1,59 @@
+<div [formGroup]="estudios">
+    <!-- Estudios profesionales -->
+
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione un estudio profesional </mat-label>
+        <mat-select formControlName="nombre_estudio">
+            <mat-option *ngFor="let item of estudiosProfesionales|async" [value]="item.ID_ESTUDIO"> {{ item.NOMBRE_ESTUDIO }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="estudios.controls.nombre_estudio.hasError('required') && estudios.controls.nombre_estudio.touched">
+            Debe seleccionar alguna opción
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Grado de estudios -->
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione un grado de estudio </mat-label>
+        <mat-select formControlName="grado_estudio">
+            <mat-option *ngFor="let item of gradoEstudios|async" [value]="item.ID_GRADO"> {{ item.NOMBRE_GRADO }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="estudios.controls.grado_estudio.hasError('required') && estudios.controls.grado_estudio.touched">
+            Debe seleccionar alguna opción
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Escuela -->
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione una escuela </mat-label>
+        <mat-select formControlName="escuela">
+            <mat-option *ngFor="let item of Escuela|async" [value]="item.ID_ESCUELA"> {{ item.NOMBRE_ESCUELA }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="estudios.controls.escuela.hasError('required') && estudios.controls.escuela.touched">
+            Debe seleccionar alguna opción
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Cargo Academico -->
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione un cargo académico </mat-label>
+        <mat-select formControlName="cargo_academico">
+            <mat-option *ngFor="let item of Cargo|async" [value]="item.ID_CARGO"> {{ item.NOMBRE_CARGO }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="estudios.controls.cargo_academico.hasError('required') && estudios.controls.cargo_academico.touched">
+            Debe seleccionar alguna opción
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Nombramiento -->
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione un nombramiento </mat-label>
+        <mat-select formControlName="nombramiento">
+            <mat-option *ngFor="let item of Nombramiento|async" [value]="item.ID_NOMBRAMIENTO"> {{ item.NOMBRE_NOMBRAMIENTO }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="estudios.controls.nombramiento.hasError('required') && estudios.controls.nombramiento.touched">
+            Debe seleccionar alguna opción
+        </mat-error>
+    </mat-form-field>
+
+
+</div>

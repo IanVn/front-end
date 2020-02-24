@@ -166,20 +166,21 @@ export class RegistroComponent implements OnInit, AfterViewInit{
     this.f.opcion.valueChanges.subscribe( data => {
       this.opcionSeleccionada = data;
       this.t.clear();
-      this.DatosObligatorios = Object.keys( this.formulario.value).length >= 8 ? true : false;
+      this.DatosObligatorios = this.t.length <= 0 ? true : false;
     });
   }
 
   ObtenerEstudios() {
-    // A partir de aqui estamos recibiendo el formulario del componente hijo en la variable data
+    // A partir de aqui estamos recibiendo el formulario del componente hijo en la variable data, nota: Cuando el formulario pasa de un estado valido
+    // a uno invalido el array ya forma parte del formulario padre, entonces mientras el formulario hijo sea invalido entonces el padre lo sera,
+    // entonces cuando de nuevo pasa del estado invalido al valido se vuelve a repetir el proceso definido por esta funcion
     this._formulario.formulario$.subscribe( data => {
-      if( this.t.length > 0 ) {
+      console.log(data);
+      if ( this.t.length > 0 ) {
         this.t.clear();
       }
+      this.DatosObligatorios = !data.invalid ? false : true;
       this.t.push( data );
-      this.DatosObligatorios = this.t.length > 0 ? false : true; 
-      // this.DatosObligatorios = Object.keys( this.formulario.value).length >= 8 ? false : true;
-      console.log(this.formulario);
     } );
   }
   

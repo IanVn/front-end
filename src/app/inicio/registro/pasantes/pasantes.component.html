@@ -1,0 +1,37 @@
+<div [formGroup]="pasantesForm">
+
+    <!-- Programa academico -->
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione un programa académico </mat-label>
+        <mat-select formControlName="programa_academico">
+            <mat-option *ngFor="let item of ProgramaAcademico|async" [value]="item.ID_PROGRAMA"> {{ item.NOMBRE_PROGRAMA }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="pasantesForm.controls.programa_academico.hasError('required') && pasantesForm.controls.programa_academico.touched">
+            Debe seleccionar un programa académico
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Modalidad -->
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione una modalidad </mat-label>
+        <mat-select formControlName="modalidad">
+            <mat-option *ngFor="let item of Modalidad|async" [value]="item.ID_MODALIDAD"> {{ item.NOMBRE_MODALIDAD }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="pasantesForm.controls.modalidad.hasError('required') && pasantesForm.controls.modalidad.touched">
+            Debe seleccionar una modadalidad
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Departamento de adscripción -->
+    <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Seleccione algunos departamentos </mat-label>
+        <mat-select formControlName="departamento_adscripcion" multiple>
+            <mat-option *ngFor="let item of DepartamentoAdscripcion|async" [value]="item.ID_DEPARTAMENTO"> {{ item.NOMBRE_DEPARTAMENTO }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="pasantesForm.controls.departamento_adscripcion.hasError('required') && pasantesForm.controls.departamento_adscripcion.touched">
+            Debe seleccionar por lo menos un departamento
+        </mat-error>
+    </mat-form-field>
+
+
+</div>

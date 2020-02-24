@@ -10,6 +10,10 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular.material.module';
 import { ServiciosModule } from './servicios/servicios.module';
+import { AcademicoComponent } from './inicio/registro/academico/academico.component';
+import { ProfesorComponent } from './inicio/registro/profesor/profesor.component';
+import { AcademicoExternoComponent } from './inicio/registro/academico-externo/academico-externo.component';
+import { PasantesComponent } from './inicio/registro/pasantes/pasantes.component';
 
 
 
@@ -18,7 +22,11 @@ import { ServiciosModule } from './servicios/servicios.module';
     AppComponent,
     InicioComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    AcademicoComponent,
+    ProfesorComponent,
+    AcademicoExternoComponent,
+    PasantesComponent
   ],
   imports: [
     BrowserModule,

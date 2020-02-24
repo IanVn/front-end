@@ -55,5 +55,84 @@ export class RegistroService {
     );
   }
 
+  // Peticion para obtener los grados de estudios
+  ObtenerGradosEstudios(): Observable < any > {
+    let url = ULR_SERVICES + '/obtener/gradoEstudios';
+
+    // Hacemos la peticion GET
+    return this.http.get( url ).pipe(
+      map( ( GradoEstudios: any ) => GradoEstudios.grado_estudios )
+    );
+  }
+
+  // Peticion para obtener las escuelas
+  ObtenerEscuelas(): Observable <any> {
+    let url = ULR_SERVICES + '/obtener/escuelas';
+
+    // Hacemos la peticion
+    return this.http.get( url ).pipe( 
+      map( ( escuela: any ) => escuela.escuela )
+     );
+  }
+
+  // Peticion para obtener el cargo academico
+  ObtenerCargoAcademico(): Observable < any > {
+    
+    let url = ULR_SERVICES + '/obtener/cargoAcademico';
+
+    // Hacemos la peticion GET
+    return this.http.get( url ).pipe( 
+      map( ( cargo: any) => cargo.cargo_academico )
+     );
+  }
+
+  // Peticion para obtener el nombramiento
+  ObtenerNombramiento(): Observable <any> {
+    let url = ULR_SERVICES + '/obtener/nombramiento';
+
+    // Hacemos la peticion GET
+    return this.http.get( url ).pipe(
+      map( ( nombramiento: any ) => nombramiento.nombramiento )
+    );
+  }
+
+  // Peticion para obtener los lugares de imparticion de clase
+  ObtenerLugarImparticionClase(): Observable <any> {
+    
+    let url = ULR_SERVICES + '/obtener/imparticionClase';
+    return this.http.get( url ).pipe( 
+      map( ( imparticion: any ) => imparticion.imparticion_clase )
+     );
+  }
+
+  // Peticion para obtener los programas academicos
+  ObtenerProgramasAcademicos(): Observable <any> {
+    
+    let url = ULR_SERVICES +'/obtener/programaAcademico';
+
+    return this.http.get( url ).pipe( 
+      map( ( programaAcademico: any) => programaAcademico.programa_academico )
+     );
+  }
+
+  // Peticion para obtener los departamentos de adscripcion
+  ObtenerDepartamentoAdscripcion(): Observable <any> {
+
+    let url = ULR_SERVICES +'/obtener/departamentoColaboracional';
+    return this.http.get( url ).pipe(
+      map( ( departamento: any) => departamento.departamento_colaboracional )
+    );
+  }
+
+  // Peticion para obtener la modalidad
+  ObtenerModalidad(): Observable <any> {
+    
+    let url = ULR_SERVICES + '/obtener/modalidad';
+
+    return this.http.get( url ).pipe(
+      map( ( modalidad: any ) => modalidad.modalidad )
+    );
+  }
+  
 
 }
