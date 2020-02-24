@@ -2,8 +2,8 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Validadores } from './validadores';
 import { RegistroService } from '../../servicios/registro/registro.service';
-import { switchMap, filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { switchMap, filter, tap } from 'rxjs/operators';
+import { Observable, empty } from 'rxjs';
 import { FormularioService } from '../../servicios/registro/formulario.service';
 
 declare function init_plugins();
@@ -106,7 +106,7 @@ export class RegistroComponent implements OnInit, AfterViewInit{
 
   getErrorCorreo() {
     return this.f.correo.hasError('required') ? 'Debe insertar un correo' : 
-    this.f.correo.hasError('email') ? 'No es un correo valido' : 
+    this.f.correo.errors.email ? 'No es un correo valido' : 
     this.f.correo.hasError('existeCorreo') ? 'Este correo ya esta registrado' : '';
   }
 
@@ -143,8 +143,15 @@ export class RegistroComponent implements OnInit, AfterViewInit{
     }
   
   ExisteCorreo() {
-      this.f.correo.valueChanges.pipe( 
-      switchMap( data => this._registro.ExisteCorreo( data) )
+      this.f.correo.valueChanges.pipe(
+      switchMap( ( data:any ) => {
+        
+        if( !this.f.correo.errors) {
+          return this._registro.ExisteCorreo( data)
+        }
+        // Empty hace que no entre al subscribe
+        return empty();
+      } )
       ).subscribe( data => {
         // Si recibimos un estado false entonces quiere decir que el correo ya existe, creamos el error en la etiqueta correo
         // Si no existe desactivamos los validadores
